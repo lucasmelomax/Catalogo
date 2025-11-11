@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -5,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebApi_Oficial2.Data;
 using WebApi_Oficial2.Interfaces;
+using WebApi_Oficial2.Mappings;
 using WebApi_Oficial2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,6 +43,9 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<IAutenticarService, AutenticarService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IProdutoService, ProdutoService>();
+builder.Services.AddScoped<IPedidoService, PedidoService>();
+builder.Services.AddScoped<IItemPedidoService, ItemPedidoService>();
+builder.Services.AddAutoMapper(typeof(DTOMappingProfile));
 
 
 var app = builder.Build();
