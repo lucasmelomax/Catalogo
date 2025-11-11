@@ -39,7 +39,6 @@ namespace WebApi_Oficial2.Controllers
                 Console.WriteLine($"Erro inesperado: {ex.Message}");
                 return StatusCode(500, new { mensagem = _messageErrorGeneric });
             }
-
         }
 
         [HttpPost]

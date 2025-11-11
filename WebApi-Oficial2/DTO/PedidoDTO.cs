@@ -13,5 +13,7 @@ namespace WebApi_Oficial2.DTO {
         [Required(ErrorMessage = "O usuário é obrigatório.")]
         public int UsuarioId { get; set; }
 
+        public List<ItemPedidoDTO> ItensPedido { get; set; } = new List<ItemPedidoDTO>();
+
     }
 }

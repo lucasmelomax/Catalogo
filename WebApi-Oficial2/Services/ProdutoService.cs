@@ -17,7 +17,7 @@ namespace WebApi_Oficial2.Services {
         }
         public async Task<Produto> FiltrarPorIdAsync(int id, CancellationToken ct) {
 
-            var produtos = await _context.Produtos.FirstOrDefaultAsync(p => p.ProdutoId == id, ct);
+            var produtos = await _context.Produtos.FirstOrDefaultAsync(p => p.ProdutoId == id && !p.Inativo, ct);
 
             if ((produtos is null))
                 throw new KeyNotFoundException("Produto não encontrado.");
@@ -26,7 +26,7 @@ namespace WebApi_Oficial2.Services {
 
         }
 
-        public async Task<Produto> FiltrarPorNome(string nome, CancellationToken ct) => await _context.Produtos.FirstOrDefaultAsync(p => p.Nome == nome, ct);
+        public async Task<Produto> FiltrarPorNome(string nome, CancellationToken ct) => await _context.Produtos.FirstOrDefaultAsync(p => p.Nome == nome && !p.Inativo, ct);
             
         
         public async Task<Produto> CadastrarAsync(ProdutoDTO produtoDTO, CancellationToken ct) {
@@ -78,7 +78,7 @@ namespace WebApi_Oficial2.Services {
             if (produto is null)
                 throw new KeyNotFoundException("Usuário não encontrado.");
 
-            _context.Produtos.Remove(produto);
+            produto.Inativo = true;
             await _context.SaveChangesAsync(ct);
         }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi_Oficial2.DTO;
 using WebApi_Oficial2.Interfaces;
@@ -16,6 +17,7 @@ namespace WebApi_Oficial2.Controllers {
         }
 
         [HttpGet]
+        [Authorize]
 
         public async Task<ActionResult<IEnumerable<PedidoDTO>>> GetAll(CancellationToken ct) {
             try {
@@ -32,6 +34,7 @@ namespace WebApi_Oficial2.Controllers {
         }
 
         [HttpGet("{id:int}")]
+        [Authorize]
 
         public async Task<ActionResult<PedidoDTO>> GetById(int id, CancellationToken ct) {
 
@@ -50,6 +53,7 @@ namespace WebApi_Oficial2.Controllers {
         }
 
         [HttpPost]
+        [Authorize]
 
         public async Task<ActionResult<PedidoDTO>> Post(PedidoDTO dto, CancellationToken ct) {
 
@@ -69,6 +73,7 @@ namespace WebApi_Oficial2.Controllers {
 
 
         [HttpDelete("{id:int}")]
+        [Authorize]
 
         public async Task<ActionResult> Delete(int id, CancellationToken ct) {
 

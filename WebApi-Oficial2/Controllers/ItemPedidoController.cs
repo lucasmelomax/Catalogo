@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi_Oficial2.DTO;
 using WebApi_Oficial2.Interfaces;
@@ -16,6 +17,7 @@ namespace WebApi_Oficial2.Controllers {
         }
 
         [HttpGet]
+        [Authorize]
 
         public async Task<ActionResult<IEnumerable<ItemPedidoDTO>>> GetAll(CancellationToken ct) {
             try {
@@ -32,7 +34,7 @@ namespace WebApi_Oficial2.Controllers {
         }
 
         [HttpGet("{id:int}")]
-
+        [Authorize]
         public async Task<ActionResult<ItemPedidoDTO>> GetById(int id, CancellationToken ct) {
 
             try {
@@ -49,41 +51,6 @@ namespace WebApi_Oficial2.Controllers {
 
         }
 
-        [HttpPost]
-
-        public async Task<ActionResult<ItemPedidoDTO>> Post(ItemPedidoDTO dto, CancellationToken ct) {
-
-            try {
-                var pedido = await _pedidoService.Create(dto, ct);
-                return Ok(pedido);
-            }
-            catch (ApplicationException ex) {
-                return StatusCode(404, new { mensagem = ex.Message });
-            }
-            catch (Exception ex) {
-                Console.WriteLine($"Erro inesperado: {ex.Message}");
-                return StatusCode(500, new { mensagem = _messageErrorGeneric });
-            }
-
-        }
-
-
-        [HttpDelete("{id:int}")]
-
-        public async Task<ActionResult> Delete(int id, CancellationToken ct) {
-
-            try {
-                await _pedidoService.Delete(id, ct);
-                return Ok();
-            }
-            catch (ApplicationException ex) {
-                return StatusCode(404, new { mensagem = ex.Message });
-            }
-            catch (Exception ex) {
-                Console.WriteLine($"Erro inesperado: {ex.Message}");
-                return StatusCode(500, new { mensagem = _messageErrorGeneric });
-            }
-
         }
     }
-}
+

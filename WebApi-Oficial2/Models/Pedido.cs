@@ -13,6 +13,8 @@ namespace WebApi_Oficial2.Models
         [Required(ErrorMessage = "O usuário é obrigatório.")]
         public int UsuarioId { get; set; }
 
+        public bool Inativo { get; set; } = false;
+
         [ForeignKey("UsuarioId")]
         public Usuario Usuario { get; set; }
 

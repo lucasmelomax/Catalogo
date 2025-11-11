@@ -27,13 +27,20 @@ namespace WebApi_Oficial2.Services {
         }
 
         public async Task Delete(int id, CancellationToken ct) {
-            var deletado = await GetById(id, ct);
-            if (deletado is null) throw new ApplicationException("Erro ao deletar pedido.");
+            var pedidoDTO = await GetById(id, ct);
+            if (pedidoDTO is null) throw new ApplicationException("Erro ao deletar pedido.");
+
+            var pedido = _mapper.Map<Pedido>(pedidoDTO);
+
+            pedido.Inativo = true;
+
+            _context.Pedidos.Update(pedido);
             await _context.SaveChangesAsync(ct);
         }
 
         public async Task<IEnumerable<PedidoDTO>> GetAll(CancellationToken ct) {
-            var pedido = await _context.Pedidos.ToListAsync();
+            var pedido = await _context.Pedidos.Include(c => c.ItensPedido).Where(p => !p.Inativo).ToListAsync();
+            
             if (pedido is null) throw new ApplicationException("Não existe pedidos.");
             return _mapper.Map<IEnumerable<PedidoDTO>>(pedido);
         }

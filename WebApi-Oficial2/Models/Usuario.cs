@@ -37,6 +37,7 @@ namespace WebApi_Oficial2.Models
         ErrorMessage = "A senha deve ter no mínimo 8 caracteres, com letra maiúscula, minúscula, número e caractere especial.")]
         public string Senha { get; set; }
 
+        public bool Inativo { get; set; } = false;
         public List<Pedido> Pedidos { get; set; } = new List<Pedido>();
     }
 }

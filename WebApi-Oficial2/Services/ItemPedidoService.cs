@@ -15,21 +15,6 @@ namespace WebApi_Oficial2.Services {
             _context = context;
             _mapper = mapper;
         }
-
-        public async Task<ItemPedidoDTO> Create(ItemPedidoDTO dto, CancellationToken ct) {
-            var pedido = _mapper.Map<ItemPedido>(dto);
-            _context.Itens.Add(pedido);
-            await _context.SaveChangesAsync(ct);
-
-            return _mapper.Map<ItemPedidoDTO>(pedido);
-        }
-
-        public async Task Delete(int id, CancellationToken ct) {
-            var deletado = await GetById(id, ct);
-            if (deletado is null) throw new ApplicationException("Erro ao deletar item pedido.");
-            await _context.SaveChangesAsync(ct);
-        }
-
         public async Task<IEnumerable<ItemPedidoDTO>> GetAll(CancellationToken ct) {
             var pedido = await _context.Itens.ToListAsync(ct);
             if (pedido is null) throw new ApplicationException("Não existe item no pedido.");
@@ -37,7 +22,7 @@ namespace WebApi_Oficial2.Services {
         }
 
         public async Task<ItemPedidoDTO> GetById(int id, CancellationToken ct) {
-            var pedido = await _context.Itens.FirstOrDefaultAsync(p => p.PedidoId == id, ct);
+            var pedido = await _context.Itens.FirstOrDefaultAsync(p => p.ItemPedidoId == id, ct);
             if (pedido is null) throw new ApplicationException("Esse item do pedido nao existe.");
             return _mapper.Map<ItemPedidoDTO>(pedido);
         }

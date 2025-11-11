@@ -18,10 +18,13 @@ namespace WebApi_Oficial2.Models
         [StringLength(255, ErrorMessage = "A descrição pode ter no máximo 255 caracteres.")]
         public String Descricao { get; set; }
 
+        public bool Inativo { get; set; } = false;
+
         [Required(ErrorMessage = "A categoria é obrigatória.")]
         [StringLength(50, ErrorMessage = "A categoria pode ter no máximo 50 caracteres.")]
         public String Categoria { get; set; }
 
         public List<ItemPedido> ItensPedido { get; set; } = new List<ItemPedido>();
+
     }
 }

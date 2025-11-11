@@ -51,7 +51,7 @@ namespace WebApi_Oficial2.Services
 
         public async Task<List<Usuario>> FiltrarUsuariosAsync(Func<Usuario, bool> Func)
         {
-            var usuarios = await _context.Usuarios.ToListAsync();
+            var usuarios = await _context.Usuarios.Where(p => !p.Inativo).ToListAsync();
             if (usuarios is not null && usuarios.Any())
             {
                 return usuarios.Where(Func).ToList();
@@ -61,7 +61,7 @@ namespace WebApi_Oficial2.Services
 
         public async Task<Usuario> FiltrarPorIdAsync(int id, CancellationToken ct)
         {
-            var usuario = await _context.Usuarios.FindAsync(new object[] { id }, ct);
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.UsuarioId == id && !u.Inativo);
 
             if ((usuario is null))
                 throw new KeyNotFoundException("Usuário não encontrado.");
@@ -129,7 +129,8 @@ namespace WebApi_Oficial2.Services
             if (usuario is null)
                 throw new KeyNotFoundException("Usuário não encontrado.");
 
-            _context.Usuarios.Remove(usuario);
+            usuario.Inativo = true;
+
             await _context.SaveChangesAsync(ct);
         }
     }
