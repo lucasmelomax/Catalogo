@@ -40,6 +40,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddScoped<IAutenticarService, AutenticarService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IProdutoService, ProdutoService>();
 
 
 var app = builder.Build();

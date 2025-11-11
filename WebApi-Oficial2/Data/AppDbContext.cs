@@ -18,21 +18,21 @@ namespace WebApi_Oficial2.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // 🔹 Usuario (1) → Pedidos (N)
+           
             modelBuilder.Entity<Pedido>()
                 .HasOne(p => p.Usuario)
                 .WithMany(u => u.Pedidos)
                 .HasForeignKey(p => p.UsuarioId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // 🔹 Pedido (1) → Itens (N)
+            
             modelBuilder.Entity<ItemPedido>()
                 .HasOne(i => i.Pedido)
                 .WithMany(p => p.ItensPedido)
                 .HasForeignKey(i => i.PedidoId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // 🔹 Produto (1) → Itens (N)
+            
             modelBuilder.Entity<ItemPedido>()
                 .HasOne(i => i.Produto)
                 .WithMany(pr => pr.ItensPedido)
